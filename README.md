@@ -6,18 +6,18 @@ An intelligent, multi-agent Pharmacy Assistant engineered to streamline medicati
 
 ## 📋 Overview
 
-Navigating complex pharmaceutical data, dosages , pricing , and inventory availability requires both high accuracy and contextual understanding. This project combines a **Multi-Agent Architecture (LangGraph)** with a **Retrieval-Augmented Generation (RAG)** pipeline and structured clinical rule matching to retrieve verified drug data from local medical guides and inventory sheets, query external **openFDA** drug labels, summarize clinical insights via a local Large Language Model (**TinyLlama**), and maintain multi-turn conversation state using **Buffer Memory** .
+Navigating complex pharmaceutical data, dosages, pricing, and inventory availability requires both high accuracy and contextual understanding. This project combines a **Multi-Agent Architecture (LangGraph)** with a **Retrieval-Augmented Generation (RAG)** pipeline and structured clinical rule matching to retrieve verified drug data from local medical guides and inventory sheets, query external **openFDA** drug labels, summarize clinical insights via a local Large Language Model (**TinyLlama**), and maintain multi-turn conversation state using **Buffer Memory**.
 
 ---
 
 ## ✨ Key Features
 
-* **🤖 Multi-Agent Workflow Orchestration:** Coordinates three specialized agents (`Data Retrieval Agent` → `Processing & Summarization Agent` → `Automated Action Agent`) using a **LangGraph** state machine  (`StateGraph`).
+* **🤖 Multi-Agent Workflow Orchestration:** Coordinates three specialized agents (`Data Retrieval Agent` → `Processing & Summarization Agent` → `Automated Action Agent`) using a **LangGraph** state machine (`StateGraph`).
 * **🔍 Hybrid RAG & Structured Retrieval Pipeline:**
   * **Vector Search & Indexing:** Uses `all-MiniLM-L6-v2` HuggingFace embeddings and **FAISS** vector indexing over a 120-drug medical reference PDF and pharmacy inventory CSV.
   * **External API Integration:** Connects to the **openFDA Drug Label API** for real-time safety warnings when requested.
   * **Symptom & Pediatric Safety Engine:** Maps user-described symptoms to appropriate OTC medications while enforcing strict pediatric safety filters and red-flag emergency detection.
-* **🧠 Grounded LLM Data Processing & Summarization:** Uses **TinyLlama-1.1B-Chat** with anti-hallucination grounding verification and deterministic extractive fallbacks to generate accurate , concise answers.
+* **🧠 Grounded LLM Data Processing & Summarization:** Uses **TinyLlama-1.1B-Chat** with anti-hallucination grounding verification and deterministic extractive fallbacks to generate accurate, concise answers.
 * **💬 Context-Aware Conversational Buffer Memory:** Implements a persistent `ChatSession` memory state that tracks conversation history (`last_question`, `last_answer`) as well as previously displayed drug lists (`pool`, `shown`), enabling natural follow-ups such as *"What is the price of it?"*, *"Get the cheapest"*, or *"Summarize"*.
 * **📄 Automated Reporting & Interactive Web UI:** Includes a **Gradio** chat interface and an automated Action Agent that exports consultation summaries to `automated_report.md`.
 
@@ -57,64 +57,81 @@ User Query + Session Buffer Memory (History & Previous Drug Pool)
                                │
                                ▼
             Gradio Chat UI Response + Memory Update
+```
 
+---
 
 ## 🛠️ Tech Stack
-Language: Python 3.10+
 
-Agent Orchestration: LangGraph (StateGraph), LangChain (0.2.16)
+* **Language:** Python 3.10+
+* **Agent Orchestration:** LangGraph (`StateGraph`), LangChain (`0.2.16`)
+* **LLM & Embeddings:** HuggingFace Transformers (`TinyLlama/TinyLlama-1.1B-Chat-v1.0`), `sentence-transformers/all-MiniLM-L6-v2`
+* **Vector Database & Indexing:** FAISS (`faiss-cpu`)
+* **External Data & APIs:** PyPDF, Pandas, openFDA REST API
+* **User Interface:** Gradio
 
-LLM & Embeddings: HuggingFace Transformers (TinyLlama/TinyLlama-1.1B-Chat-v1.0), sentence-transformers/all-MiniLM-L6-v2
+---
 
-Vector Database & Indexing: FAISS (faiss-cpu)
+## 📁 Project Structure
 
-External Data & APIs: PyPDF, Pandas, openFDA REST API
-
-User Interface: Gradio
-
-
-📁 Project Structure
-multi-agent-pharmacy-assistant/
+```text
+RAG-Based-Intelligent-Pharmaceutical-Information-System-/
 ├── data/
-│   ├── Comprehensive  Medical & Pharmacy Guide (120 Drugs).pdf
+│   ├── Comprehensive Medical & Pharmacy Guide (120 Drugs).pdf
 │   └── Pharmacy_Inventory_120_New_Drugs.csv
 ├── src/
-│   ├── __init__.py
-│   └── backend.py          # RAG pipeline, LangGraph agents, symptom matcher & ChatSession memory
-├── app.py                  # Gradio interactive web UI with session state
-├── requirements.txt        # Python dependencies
-├── .gitignore              # Ignored cache and generated report files
-└── README.md               # Project documentation
+│   ├── app.py                  # Gradio interactive web UI
+│   └── final_project.ipynb     # Core RAG pipeline, LangGraph agents, symptom matcher & memory
+├── operating_code.ipynb        # Main launcher notebook (clones repo, installs deps & runs app.py)
+└── README.md                   # Project documentation
+```
 
+---
 
-🚀 Installation & Usage
-Option 1: Run Locally
-   1. Clone the Repository:
-             git clone [(https://github.com/Waheeed09/RAG-Based-Intelligent-Pharmaceutical-Information-System-.git)]https://github.com/Waheeed09/RAG-Based-Intelligent-Pharmaceutical-Information-System-.git
-cd multi-agent-pharmacy-assistant
+## 🚀 How to Run
 
-  2.  Create and Activate a Virtual Environment (Recommended):
-             python -m venv venv
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
+### Option 1: One-Click Run via `operating_code.ipynb` (Recommended - Google Colab)
 
-   3.  Install Dependencies:
-              pip install -r requirements.txt
-   4.  Launch the Application:
-              python app.py
-   Open the local URL displayed in the terminal (typically http://127.0.0.1:7860) in your browser.
+1. Open **`operating_code.ipynb`** in Google Colab (select a **T4 GPU** runtime for faster inference).
+2. Run the notebook cell—it automatically clones the repository, installs the required dependencies, locates the datasets in `data/` and backend notebook in `src/`, and launches the **Gradio** web interface.
+3. Click the generated `gradio.live` public URL to start chatting with the assistant.
 
-Option 2: Run on Google Colab (GPU Accelerated)
-You can run the entire project directly on Google Colab in a single cell without local setup:
-     %cd /content/RAG-Based-Intelligent-Pharmaceutical-Information-System-/multi-agent-pharmacy-assistant
-!pip install -q -r requirements.txt
-!python app.py
+---
 
+### Option 2: Run Locally via Terminal
 
-💬 Example Conversation Flow
+1. **Clone the Repository:**
+   ```bash
+   git clone [https://github.com/Waheeed09/RAG-Based-Intelligent-Pharmaceutical-Information-System-.git](https://github.com/Waheeed09/RAG-Based-Intelligent-Pharmaceutical-Information-System-.git)
+   cd RAG-Based-Intelligent-Pharmaceutical-Information-System-
+   ```
 
+2. **Install Dependencies:**
+   ```bash
+   pip install "langchain==0.2.16" "langchain-community==0.2.16" langchain-huggingface faiss-cpu pypdf transformers torch langgraph gradio pandas requests "numpy<2.0"
+   ```
+
+3. **Set File Paths & Launch the App:**
+   ```bash
+   # On Linux/macOS:
+   export NOTEBOOK_PATH="src/final_project.ipynb"
+   export PDF_PATH="data/Comprehensive Medical & Pharmacy Guide (120 Drugs).pdf"
+   export CSV_PATH="data/Pharmacy_Inventory_120_New_Drugs.csv"
+   python src/app.py
+
+   # On Windows (PowerShell):
+   $env:NOTEBOOK_PATH="src/final_project.ipynb"
+   $env:PDF_PATH="data/Comprehensive Medical & Pharmacy Guide (120 Drugs).pdf"
+   $env:CSV_PATH="data/Pharmacy_Inventory_120_New_Drugs.csv"
+   python src/app.py
+   ```
+   Open the local URL displayed in the terminal (typically `http://127.0.0.1:7860`) in your browser.
+
+---
+
+## 💬 Example Conversation Flow
+
+```text
 User: What is the standard dosage of Zyrtec?
 Assistant: Zyrtec 10mg Tabs (Cetirizine 10mg): 1 tablet once daily, preferably at bedtime.
 
@@ -133,3 +150,7 @@ User: summarize
 Assistant: Summary - top 2 options:
 1. Congestal Tabs (Paracetamol + Pseudoephedrine + Chlorpheniramine) - 50 EGP
 2. Panadol Cold + Flu Day (Paracetamol + Phenylephrine) - 76 EGP
+```
+
+---
+
