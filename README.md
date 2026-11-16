@@ -6,18 +6,18 @@ An intelligent, multi-agent Pharmacy Assistant engineered to streamline medicati
 
 ## 📋 Overview
 
-Navigating complex pharmaceutical data, dosages, pricing, and inventory availability requires both high accuracy and contextual understanding. This project combines a **Multi-Agent Architecture (LangGraph)** with a **Retrieval-Augmented Generation (RAG)** pipeline and structured clinical rule matching to retrieve verified drug data from local medical guides and inventory sheets, query external **openFDA** drug labels, summarize clinical insights via a local Large Language Model (**TinyLlama**), and maintain multi-turn conversation state using **Buffer Memory**.
+Navigating complex pharmaceutical data, dosages , pricing , and inventory availability requires both high accuracy and contextual understanding. This project combines a **Multi-Agent Architecture (LangGraph)** with a **Retrieval-Augmented Generation (RAG)** pipeline and structured clinical rule matching to retrieve verified drug data from local medical guides and inventory sheets, query external **openFDA** drug labels, summarize clinical insights via a local Large Language Model (**TinyLlama**), and maintain multi-turn conversation state using **Buffer Memory** .
 
 ---
 
 ## ✨ Key Features
 
-* **🤖 Multi-Agent Workflow Orchestration:** Coordinates three specialized agents (`Data Retrieval Agent` → `Processing & Summarization Agent` → `Automated Action Agent`) using a **LangGraph** state machine (`StateGraph`).
+* **🤖 Multi-Agent Workflow Orchestration:** Coordinates three specialized agents (`Data Retrieval Agent` → `Processing & Summarization Agent` → `Automated Action Agent`) using a **LangGraph** state machine  (`StateGraph`).
 * **🔍 Hybrid RAG & Structured Retrieval Pipeline:**
   * **Vector Search & Indexing:** Uses `all-MiniLM-L6-v2` HuggingFace embeddings and **FAISS** vector indexing over a 120-drug medical reference PDF and pharmacy inventory CSV.
   * **External API Integration:** Connects to the **openFDA Drug Label API** for real-time safety warnings when requested.
   * **Symptom & Pediatric Safety Engine:** Maps user-described symptoms to appropriate OTC medications while enforcing strict pediatric safety filters and red-flag emergency detection.
-* **🧠 Grounded LLM Data Processing & Summarization:** Uses **TinyLlama-1.1B-Chat** with anti-hallucination grounding verification and deterministic extractive fallbacks to generate accurate, concise answers.
+* **🧠 Grounded LLM Data Processing & Summarization:** Uses **TinyLlama-1.1B-Chat** with anti-hallucination grounding verification and deterministic extractive fallbacks to generate accurate , concise answers.
 * **💬 Context-Aware Conversational Buffer Memory:** Implements a persistent `ChatSession` memory state that tracks conversation history (`last_question`, `last_answer`) as well as previously displayed drug lists (`pool`, `shown`), enabling natural follow-ups such as *"What is the price of it?"*, *"Get the cheapest"*, or *"Summarize"*.
 * **📄 Automated Reporting & Interactive Web UI:** Includes a **Gradio** chat interface and an automated Action Agent that exports consultation summaries to `automated_report.md`.
 
