@@ -90,7 +90,7 @@ multi-agent-pharmacy-assistant/
 🚀 Installation & Usage
 Option 1: Run Locally
    1. Clone the Repository:
-             git clone [https://github.com/your-username/multi-agent-pharmacy-assistant.git](https://github.com/your-username/multi-agent-pharmacy-assistant.git)
+             git clone [(https://github.com/Waheeed09/RAG-Based-Intelligent-Pharmaceutical-Information-System-.git)]https://github.com/Waheeed09/RAG-Based-Intelligent-Pharmaceutical-Information-System-.git
 cd multi-agent-pharmacy-assistant
 
   2.  Create and Activate a Virtual Environment (Recommended):
@@ -108,8 +108,7 @@ source venv/bin/activate
 
 Option 2: Run on Google Colab (GPU Accelerated)
 You can run the entire project directly on Google Colab in a single cell without local setup:
-     !git clone [https://github.com/your-username/multi-agent-pharmacy-assistant.git](https://github.com/your-username/multi-agent-pharmacy-assistant.git)
-%cd multi-agent-pharmacy-assistant
+     %cd /content/RAG-Based-Intelligent-Pharmaceutical-Information-System-/multi-agent-pharmacy-assistant
 !pip install -q -r requirements.txt
 !python app.py
 
